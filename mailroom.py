@@ -102,8 +102,14 @@ if __name__ == '__main__':
             # check for name in list first
             if controller.select_donor(controller.user_input):
                 selection = controller.select_donor(controller.user_input)
-                donation_amount = input('Please enter donation amount')
-                selection.donations.append(int(donation_amount))
+                donation_amount = input('Please enter donation amount. Enter multiple amounts separated by spaces.')
+                input_list = donation_amount.split(' ')
+                try:
+                    convert_to_int = [int(x) for x in input_list]
+                    selection.donations.add_donations(convert_to_int)
+                except ValueError:
+                    print('Please enter a number!')
+
                 # send out letter
                 print(controller.thank_you_letter(selection.name))
                 continue
@@ -116,8 +122,14 @@ if __name__ == '__main__':
                     continue
                 else:
                     selection = controller.select_donor(controller.user_input)
-                    donation_amount = input("Please enter donation amount")
-                    selection.donations.append(int(donation_amount))
+                    donation_amount = input('Please enter donation amount. Enter multiple amounts separated by spaces.')
+                    input_list = donation_amount.split(' ')
+                    try:
+                        convert_to_int = [int(x) for x in input_list]
+                        selection.donations.add_donations(convert_to_int)
+                    except ValueError:
+                        print('Please enter a number!')
+
                     # send out letter
                     print(controller.thank_you_letter(selection.name))
                     continue

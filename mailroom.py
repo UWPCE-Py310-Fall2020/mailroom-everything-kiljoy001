@@ -16,8 +16,31 @@ class DonorData:
         :param args: must be decimal or int
         :return: None
         """
-        for x in args:
-            self.donations.append(x)
+        for num in args:
+            self.donations.append(num)
+
+
+class MenuController:
+    """
+    Class centralizes controls for front-end menu texts
+    """
+
+    def __init__(self):
+        self._text_selector = {'main': 'Please make a selection\n1. Send a Thank You Letter\n2. Create Report\n3. Exit',
+                               'donor_select': 'Type List to see donors. To select donor, type donors name. '
+                                               'If donor does not exist, type name to create new donor',
+                               'donation_amount': 'Please enter donation amount. '
+                                                  'Enter multiple amounts separated by spaces.',
+                               'num_error': 'Please enter a number!'
+                               }
+
+    def return_text(self, key):
+        """
+        returns value by key
+        :param key: str
+        :return: str
+        """
+        return self._text_selector.get(key)
 
 
 class ProgramController:
@@ -92,25 +115,25 @@ for x in donor_list:
 
 # init controller
 controller = ProgramController(donor_list)
+menu = MenuController()
 
 if __name__ == '__main__':
     while controller.exit is False:
-        controller.user_input = input('Please make a selection\n1. Send a Thank You Letter\n2. Create Report\n3. Exit')
+        controller.user_input = input(menu.return_text('menu'))
         if controller.user_input == '3':
             controller.exit = True
         elif controller.user_input == '1':
-            controller.user_input = input('Type List to see donors. To select donor, type donors name. If donor does '
-                                          'not exist, type name to create new donor')
+            controller.user_input = input(menu.return_text('donor_select'))
             # check for name in list first
             if controller.select_donor(controller.user_input):
                 selection = controller.select_donor(controller.user_input)
-                donation_amount = input('Please enter donation amount. Enter multiple amounts separated by spaces.')
+                donation_amount = input(menu.return_text('donation_amount'))
                 input_list = donation_amount.split(' ')
                 try:
                     convert_to_int = [int(x) for x in input_list]
                     selection.donations.add_donations(convert_to_int)
                 except ValueError:
-                    print('Please enter a number!')
+                    print(menu.return_text('num_error'))
 
                 # send out letter
                 print(controller.thank_you_letter(selection.name))
@@ -124,13 +147,13 @@ if __name__ == '__main__':
                     continue
                 else:
                     selection = controller.select_donor(controller.user_input)
-                    donation_amount = input('Please enter donation amount. Enter multiple amounts separated by spaces.')
+                    donation_amount = input(menu.return_text('donor_select'))
                     input_list = donation_amount.split(' ')
                     try:
                         convert_to_int = [int(x) for x in input_list]
                         selection.donations.add_donations(convert_to_int)
                     except ValueError:
-                        print('Please enter a number!')
+                        print(menu.return_text('num_error'))
 
                     # send out letter
                     print(controller.thank_you_letter(selection.name))

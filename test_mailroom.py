@@ -5,7 +5,7 @@ Mailroom.py logic tests
 
 """
 
-from mailroom import DonorData, ProgramController
+from mailroom import DonorData, ProgramController, MenuController
 
 # DonorData tests
 
@@ -107,7 +107,7 @@ def test_thank_you_letter_returns_correct_name():
     result = test_controller.thank_you_letter('Make me')
 
     # Assert
-    assert result == 'Aloha Make me!\nWe here at the Mailroom LLC wish to give you mad props for sending a much needed' \
+    assert result == 'Aloha Make me!\nWe here at the Mailroom LLC wish to give you mad props for sending a much needed'\
                  ' donation. We welcome your kindness, and again, a big mahalo to you from the MailRoom!'
 
 
@@ -127,3 +127,17 @@ def test_report_returns_correct_calculations():
         assert sum(x.donations) == 15
         assert len(x.donations) == 5
         assert sum(x.donations) / len(x.donations) == 3
+
+
+# Menucontroller tests
+
+
+def test_menucontroller_returns_text():
+    # Arrange
+    test_menu = MenuController()
+
+    # Act
+    result = test_menu.return_text('main')
+
+    # Assert
+    assert result is not None

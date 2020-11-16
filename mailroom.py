@@ -26,12 +26,13 @@ class MenuController:
     """
 
     def __init__(self):
-        self._text_selector = {'main': 'Please make a selection\n1. Send a Thank You Letter\n2. Create Report\n3. Exit',
+        self._text_selector = {'main': 'Please make a selection\n1. Send a Thank You Letter\n2. Create Report\n3. Write'
+                                       ' letters to file\n4. Exit',
                                'donor_select': 'Type List to see donors. To select donor, type donors name. '
                                                'If donor does not exist, type name to create new donor',
                                'donation_amount': 'Please enter donation amount. '
                                                   'Enter multiple amounts separated by spaces.',
-                               'num_error': 'Please enter a number!'
+                               'num_error': 'Please enter a number!',
                                }
 
     def return_text(self, key):
@@ -99,6 +100,20 @@ class ProgramController:
             print('{:<15} {:>15} {:>15} {:>15}'.format(don.name, sum(don.donations), len(don.donations),
                                                        sum(don.donations) / len(don.donations)))
 
+    def write_letter_to_file(self):
+        """
+        write letter to file
+        :return: None
+        """
+        # get names from donor list
+        names = [obj.name for obj in self.donors]
+
+        # create file using name
+        for name in names:
+            outfile = open(f'{name}.txt', 'w')
+            outfile.write(self.thank_you_letter(name))
+            outfile.close()
+
 
 # create test donors
 
@@ -107,7 +122,7 @@ donor2 = DonorData('James Brown')
 donor3 = DonorData('Spicy Chicken')
 donor4 = DonorData('Potato Pizza')
 donor5 = DonorData('Hip Hop Cop')
-donor_list = [donor1, donor2, donor3, donor4, donor4, donor5]
+donor_list = [donor1, donor2, donor3, donor4, donor5]
 
 # add values to donations
 for x in donor_list:
@@ -119,8 +134,8 @@ menu = MenuController()
 
 if __name__ == '__main__':
     while controller.exit is False:
-        controller.user_input = input(menu.return_text('menu'))
-        if controller.user_input == '3':
+        controller.user_input = input(str(menu.return_text('main')))
+        if controller.user_input == '4':
             controller.exit = True
         elif controller.user_input == '1':
             controller.user_input = input(menu.return_text('donor_select'))
@@ -161,4 +176,8 @@ if __name__ == '__main__':
 
         elif controller.user_input == '2':
             controller.create_report()
+            continue
+
+        elif controller.user_input == '3':
+            controller.write_letter_to_file()
             continue

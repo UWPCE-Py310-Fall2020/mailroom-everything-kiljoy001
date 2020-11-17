@@ -141,3 +141,4 @@ def test_menucontroller_returns_text():
 
     # Assert
     assert result is not None
+    assert isinstance(result, str)

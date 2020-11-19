@@ -5,6 +5,7 @@ class DonorData:
     """
     Class stores donor data as an object
     """
+
     def __init__(self, name):
         self.donations = []
         self.name = name
@@ -23,6 +24,7 @@ class ProgramController:
     """
     Class centralizes controls for the application
     """
+
     def __init__(self, donors_list):
         self.user_input = None
         self.exit = False
@@ -32,7 +34,7 @@ class ProgramController:
         """
         Returns a list of donors if the command is list, otherwise it will add a new donor
         :param input_command: str
-        :return: None
+        :return: List, None
         """
         if input_command == 'list':
             return self.donors
@@ -72,7 +74,7 @@ class ProgramController:
               + '-' * ((15 * 4) + len('Donor Name') + len('Total Given') + len('Num Gifts') + 4))
         for don in self.donors:
             print('{:<15} {:>15} {:>15} {:>15}'.format(don.name, sum(don.donations), len(don.donations),
-                                                   sum(don.donations)/len(don.donations)))
+                                                       sum(don.donations) / len(don.donations)))
 
 
 # create test donors
@@ -102,22 +104,34 @@ if __name__ == '__main__':
             # check for name in list first
             if controller.select_donor(controller.user_input):
                 selection = controller.select_donor(controller.user_input)
-                donation_amount = input('Please enter donation amount')
-                selection.donations.append(int(donation_amount))
+                donation_amount = input('Please enter donation amount. Enter multiple amounts separated by spaces.')
+                input_list = donation_amount.split(' ')
+                try:
+                    convert_to_int = [int(x) for x in input_list]
+                    selection.donations.add_donations(convert_to_int)
+                except ValueError:
+                    print('Please enter a number!')
+
                 # send out letter
                 print(controller.thank_you_letter(selection.name))
                 continue
             else:
                 # check for list or name not found
-                controller.list_or_add_donor(controller.user_input)
-                if controller.user_input == 'list':
-                    for donor_obj in donor_list:
+                list_or_new = controller.list_or_add_donor(controller.user_input)
+                if list_or_new:
+                    for donor_obj in list_or_new:
                         print(f'Name:{donor_obj.name} Donations:{donor_obj.donations}\n')
                     continue
                 else:
                     selection = controller.select_donor(controller.user_input)
-                    donation_amount = input("Please enter donation amount")
-                    selection.donations.append(int(donation_amount))
+                    donation_amount = input('Please enter donation amount. Enter multiple amounts separated by spaces.')
+                    input_list = donation_amount.split(' ')
+                    try:
+                        convert_to_int = [int(x) for x in input_list]
+                        selection.donations.add_donations(convert_to_int)
+                    except ValueError:
+                        print('Please enter a number!')
+
                     # send out letter
                     print(controller.thank_you_letter(selection.name))
                     continue

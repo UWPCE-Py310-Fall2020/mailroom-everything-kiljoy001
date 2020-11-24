@@ -5,7 +5,7 @@ Mailroom.py logic tests
 
 """
 
-from mailroom import DonorData, ProgramController, MenuController
+from mailroom.Mailroom_Classes import DonorData, ProgramController, MenuController
 
 # DonorData tests
 

@@ -1,4 +1,4 @@
-from mailroom.Mailroom_Classes import ProgramController, MenuController, DonorData
+from mailroom_stuff.Mailroom_Classes import ProgramController, MenuController, DonorData
 
 # create test donors
 
@@ -15,7 +15,7 @@ for x in donor_list:
 
 
 # init controller
-controller = ProgramController()
+controller = ProgramController(donor_list)
 menu = MenuController()
 
 

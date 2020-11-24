@@ -1,4 +1,4 @@
-import mailroom.Front_End as Mail
+import mailroom_stuff.Front_End
 
 if __name__ == '__main__':
-    Mail.main()
+    mailroom_stuff.Front_End.main()

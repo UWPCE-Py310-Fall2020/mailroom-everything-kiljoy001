@@ -131,3 +131,5 @@ dmypy.json
 # Pycharm
 .idea/
 
+# any text files that are generated
+*.txt

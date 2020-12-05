@@ -115,3 +115,5 @@ class ProgramController:
             outfile.close()
 
 
+# Already set this up using objects when I first started.
+
